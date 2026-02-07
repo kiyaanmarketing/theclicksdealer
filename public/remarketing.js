@@ -152,7 +152,9 @@ onDOMReady(function() {
     }
 
      if (window.location.hostname === "www.watsons.com.hk") {
-        initTracking();
+        if (isCartPage()) {
+            initTracking();
+        }
     }
 
 });
