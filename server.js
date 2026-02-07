@@ -7,7 +7,6 @@ const session = require('express-session');
 require("dotenv").config();
 const corsMiddleware = require("./middleware/corsMiddleware");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
 const trackingRoutes = require('./routes/tracking');
 const {  connectDB, getDB } = require('./mongo-config');
 const app = express();
@@ -385,7 +384,7 @@ app.post("/api/collect", checkIframeExecution, async (req, res) => {
   const trackingData = {
     TableName: "Retargeting",
     Item: {
-      id: uniqueID || uuidv4(),
+      id: uniqueID,
       url: pageURL,
       referrer: referrerURL,
       userAgent,
