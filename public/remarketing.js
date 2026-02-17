@@ -124,6 +124,10 @@ onDOMReady(function() {
 
     if (window.location.hostname === "www.fareastflora.com") {
         initTracking();
+         if (isCartPage()) {
+            initTracking();
+           
+        }
     }
 
     if (window.location.hostname === "checkout.accorplus.com") {
