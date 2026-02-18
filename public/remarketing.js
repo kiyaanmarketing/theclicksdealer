@@ -95,7 +95,7 @@
 
     function isCartPage() {
            
-        const cartPages = ["/cart", "/checkout","/checkout/shipping","/checkout/cart","/shopping-cart","/en/cart","/en/checkout/review-order","/checkout/review-order"];
+        const cartPages = ["/cart", "/checkout","/checkout/shipping","/checkout/cart","/shopping-cart","/en/cart","/en/checkout/review-order","/checkout/review-order","/th/checkout/information","/pay/16588903-130b-42a9-b750-5f880e65f8a1"];
        
         return cartPages.some(path => window.location.pathname.includes(path));
     }
