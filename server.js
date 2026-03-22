@@ -431,6 +431,34 @@ app.get("/clear-session", (req, res) => {
 
 // Endpoint to track users and return the affiliate URL
 
+// app.post('/api/track-user', async (req, res) => {
+//   const { url, referrer, unique_id, origin } = req.body;
+//   console.log("Request Data:", req.body);
+
+//   if (!url || !unique_id) {
+//     console.log("Missing Data Error:", { url, unique_id });
+//     return res.status(400).json({ success: false, error: 'Invalid request data' });
+//   }
+
+//   try {
+//     const affiliateUrl = await getAffiliateUrlByHostNameFindActive(origin, 'AffiliateUrlsN');
+//     console.log("Affiliate URL:", affiliateUrl);
+
+//     if (!affiliateUrl) {
+//       console.log("No affiliate URL found, using fallback");
+//       return res.json({ success: true, affiliate_url: "" });
+//     }
+
+//     const finalUrl = affiliateUrl + `&unique_id=${unique_id}`;
+//     console.log("Response Data:", { success: true, affiliate_url: affiliateUrl });
+//     res.json({ success: true, affiliate_url: affiliateUrl });
+//   } catch (error) {
+//     console.error("Error in API:", error.message);
+//     res.status(500).json({ success: false, error: ' furono server error' });
+//   }
+// });
+
+
 app.post('/api/track-user', async (req, res) => {
   const { url, referrer, unique_id, origin } = req.body;
   console.log("Request Data:", req.body);
@@ -445,16 +473,23 @@ app.post('/api/track-user', async (req, res) => {
     console.log("Affiliate URL:", affiliateUrl);
 
     if (!affiliateUrl) {
-      console.log("No affiliate URL found, using fallback");
-      return res.json({ success: true, affiliate_url: "" });
+      console.log("No affiliate URL found");
+      return res.json({ success: false, affiliate_url: "" });
     }
 
-    const finalUrl = affiliateUrl + `&unique_id=${unique_id}`;
-    console.log("Response Data:", { success: true, affiliate_url: affiliateUrl });
-    res.json({ success: true, affiliate_url: affiliateUrl });
+    // {replace_it} hai toh replace karo, nahi hai toh append karo
+    const finalUrl = affiliateUrl.includes('{replace_it}')
+      ? affiliateUrl
+          .replace('{replace_it}', unique_id)
+          .replace('{replace_it}', unique_id)
+      : affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
+
+    console.log("Final URL:", finalUrl);
+    res.json({ success: true, affiliate_url: finalUrl });
+
   } catch (error) {
     console.error("Error in API:", error.message);
-    res.status(500).json({ success: false, error: ' furono server error' });
+    res.status(500).json({ success: false, error: 'Server error' });
   }
 });
 
