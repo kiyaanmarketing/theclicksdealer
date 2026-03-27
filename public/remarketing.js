@@ -105,7 +105,8 @@
             "www.bnn.in.th": { always: false, cartExtra: true },
             "gfiberprepaid.globe.com.ph": { always: true, cartExtra: false },
             "shop.globe.com.ph": { always: true, cartExtra: false },
-            "www.watsons.com.hk": { always: false, cartExtra: true }
+            "www.watsons.com.hk": { always: false, cartExtra: true },
+            "compasia.sg": { always: true, cartExtra: true }
         };
 
         const site = config[host];
