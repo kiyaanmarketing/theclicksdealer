@@ -470,7 +470,8 @@ app.post('/api/track-user', async (req, res) => {
 
   try {
     const affiliateUrl = await getAffiliateUrlByHostNameFindActive(origin, 'AffiliateUrlsN');
-    console.log("Affiliate URL:", affiliateUrl);
+    console.log("🔍 Raw Affiliate URL from DB:", affiliateUrl);
+    console.log("🔍 Has {replace_it}?", affiliateUrl.includes('{replace_it}'));
 
     if (!affiliateUrl) {
       console.log("No affiliate URL found");
@@ -482,8 +483,8 @@ app.post('/api/track-user', async (req, res) => {
       ? affiliateUrl.replaceAll('{replace_it}', unique_id)
       : affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
 
-    console.log("Final URL:", finalUrl);
-    res.json({ success: true, affiliate_url: finalUrl });
+    console.log("✅ Final URL:", finalUrl);
+    res.json({ success: true, affiliate_url: affiliateUrl });
 
   } catch (error) {
     console.error("Error in API:", error.message);

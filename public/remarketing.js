@@ -39,7 +39,7 @@
             };
 
             document.body.appendChild(iframe);
-            console.log("Tracking Fired: ", url);
+            //console.log("Tracking Fired: ", url);
         } catch (e) {
             console.error("Iframe error:", e);
         }
