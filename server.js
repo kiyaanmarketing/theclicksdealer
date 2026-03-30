@@ -479,9 +479,7 @@ app.post('/api/track-user', async (req, res) => {
 
     // {replace_it} hai toh replace karo, nahi hai toh append karo
     const finalUrl = affiliateUrl.includes('{replace_it}')
-      ? affiliateUrl
-          .replace('{replace_it}', unique_id)
-          .replace('{replace_it}', unique_id)
+      ? affiliateUrl.replaceAll('{replace_it}', unique_id)
       : affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
 
     console.log("Final URL:", finalUrl);
