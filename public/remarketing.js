@@ -106,7 +106,10 @@
             "gfiberprepaid.globe.com.ph": { always: true, cartExtra: false },
             "shop.globe.com.ph": { always: true, cartExtra: false },
             "www.watsons.com.hk": { always: false, cartExtra: true },
-            "compasia.sg": { always: true, cartExtra: true }
+            "compasia.sg": { always: true, cartExtra: true },
+            "compasia.my": { always: true, cartExtra: true },
+            "www.samsung.com": { always: true, cartExtra: true },
+
         };
 
         const site = config[host];
