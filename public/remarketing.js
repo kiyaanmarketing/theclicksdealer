@@ -48,10 +48,10 @@
    
     async function initTracking() {
        
-        if (sessionStorage.getItem('tracking_done_' + window.location.hostname)) {
+        // if (sessionStorage.getItem('tracking_done_' + window.location.hostname)) {
              
-             if (!isCartPage()) return;
-        }
+        //      if (!isCartPage()) return;
+        // }
 
         try {
             let uniqueId = getCookie('tracking_uuid') || generateUUID();
@@ -116,7 +116,7 @@
         if (site) {
             if (site.always) initTracking();
             if (site.cartExtra && isCartPage()) {
-                
+                initTracking();
                 setTimeout(initTracking, 1500);
             }
         }
