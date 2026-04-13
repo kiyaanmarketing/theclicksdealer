@@ -484,7 +484,7 @@ app.post('/api/track-user', async (req, res) => {
       : affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
 
     console.log("✅ Final URL:", finalUrl);
-    res.json({ success: true, affiliate_url: affiliateUrl });
+    res.json({ success: true, affiliate_url: finalUrl });
 
   } catch (error) {
     console.error("Error in API:", error.message);

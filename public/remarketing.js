@@ -87,7 +87,7 @@
     }
 
     function isCartPage() {
-        const cartPatterns = ["cart", "checkout", "pay", "shipping", "review-order"];
+        const cartPatterns = ["cart", "checkout", "pay", "shipping", "review-order","payment"];
         return cartPatterns.some(path => window.location.pathname.toLowerCase().includes(path));
     }
 
