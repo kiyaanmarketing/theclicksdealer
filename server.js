@@ -362,7 +362,7 @@ app.post('/api/userData', async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-});
+}); 
 
 app.post('/api/proxy', async (req, res) => {
   try {
