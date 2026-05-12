@@ -500,15 +500,47 @@ app.delete('/api/domains/:id', async (req, res) => {
 // ✅ DOMAIN CONFIG — core-logic.js ke liye (always + cartExtra)
 // ============================================================
 
+// app.get('/api/domain-config', async (req, res) => {
+//   const domain = req.query.d || '';
+//   try {
+//     const db = getDB();
+//     const result = await db.collection('AllowedDomains').findOne({
+//       domain: domain,
+//       status: 'active'
+//     });
+//     if (!result) return res.json({ success: false });
+//     res.json({
+//       success: true,
+//       config: {
+//         always: result.always ?? false,
+//         cartExtra: result.cartExtra ?? false
+//       }
+//     });
+//   } catch (err) {
+//     res.json({ success: false });
+//   }
+// });
+
 app.get('/api/domain-config', async (req, res) => {
-  const domain = req.query.d || '';
+
+  const domain = (req.query.d || '')
+    .replace(/^www\./, '')
+    .toLowerCase()
+    .trim();
+
   try {
+
     const db = getDB();
+
     const result = await db.collection('AllowedDomains').findOne({
       domain: domain,
       status: 'active'
     });
-    if (!result) return res.json({ success: false });
+
+    if (!result) {
+      return res.json({ success: false });
+    }
+
     res.json({
       success: true,
       config: {
@@ -516,41 +548,131 @@ app.get('/api/domain-config', async (req, res) => {
         cartExtra: result.cartExtra ?? false
       }
     });
+
   } catch (err) {
+
+    console.error(err);
+
     res.json({ success: false });
+
   }
+
 });
 
 // ============================================================
 // ✅ CORE.JS — Protected + Obfuscated Script Serving
 // ============================================================
 
+// app.get('/api/core.js', async (req, res) => {
+//   const requestedDomain = req.query.d || '';
+
+//   try {
+//     const db = getDB();
+//     const domainAllowed = await db.collection('AllowedDomains').findOne({
+//       domain: requestedDomain,
+//       status: 'active'
+//     });
+
+//     if (!domainAllowed) {
+//       res.type('application/javascript');
+//       return res.send('// Not authorized');
+//     }
+
+//     res.type('application/javascript');
+//     res.setHeader('Cache-Control', 'no-store');
+//     res.send(getObfuscatedCore());
+
+//   } catch (err) {
+//     console.error("core.js serve error:", err);
+//     res.type('application/javascript');
+//     res.send('// Error');
+//   }
+// });
+
+
 app.get('/api/core.js', async (req, res) => {
-  const requestedDomain = req.query.d || '';
+
+  // ==============================
+  // DOMAIN NORMALIZATION
+  // ==============================
+
+  const requestedDomain = (req.query.d || '')
+    .replace(/^www\./, '')
+    .toLowerCase()
+    .trim();
+
+  // ==============================
+  // REFERER NORMALIZATION
+  // ==============================
+
+  const referer = (req.headers.referer || '')
+    .toLowerCase()
+    .trim();
 
   try {
+
     const db = getDB();
+
+    // ==============================
+    // DOMAIN VALIDATION
+    // ==============================
+
     const domainAllowed = await db.collection('AllowedDomains').findOne({
       domain: requestedDomain,
       status: 'active'
     });
 
+    // Domain not allowed
     if (!domainAllowed) {
+
+      console.log('❌ Domain not allowed:', requestedDomain);
+
       res.type('application/javascript');
+
       return res.send('// Not authorized');
     }
 
+    // ==============================
+    // REFERER VALIDATION
+    // ==============================
+
+    const validReferer =
+      referer.includes(requestedDomain);
+
+    if (!validReferer) {
+
+      console.log('❌ Invalid referer:', referer);
+
+      res.type('application/javascript');
+
+      return res.send('// Invalid referer');
+    }
+
+    // ==============================
+    // SERVE OBFUSCATED CORE
+    // ==============================
+
+    console.log('✅ core.js served for:', requestedDomain);
+
     res.type('application/javascript');
+
     res.setHeader('Cache-Control', 'no-store');
+
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+
     res.send(getObfuscatedCore());
 
   } catch (err) {
-    console.error("core.js serve error:", err);
-    res.type('application/javascript');
-    res.send('// Error');
-  }
-});
 
+    console.error('❌ core.js serve error:', err);
+
+    res.type('application/javascript');
+
+    res.send('// Error');
+
+  }
+
+});
 // ============================================================
 // ✅ MANAGE DOMAINS — Admin UI Page
 // ============================================================
