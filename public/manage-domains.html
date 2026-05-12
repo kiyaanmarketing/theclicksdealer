@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domain Manager — TheClicksDealer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body { background: #0f172a; color: #e2e8f0; padding: 30px; min-height: 100vh; }
+    h1 { color: #38bdf8; margin-bottom: 8px; font-size: 22px; }
+    .subtitle { color: #64748b; font-size: 13px; margin-bottom: 28px; }
+
+    .add-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 28px; }
+    .add-box h3 { font-size: 14px; color: #94a3b8; margin-bottom: 14px; }
+    .add-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    input[type="text"] { padding: 10px 14px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; font-size: 14px; outline: none; }
+    input[type="text"]:focus { border-color: #38bdf8; }
+    input[type="text"]::placeholder { color: #475569; }
+    #newDomain { flex: 1; min-width: 200px; }
+
+    .toggle-group { display: flex; gap: 14px; align-items: center; }
+    .toggle-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #94a3b8; }
+    .toggle-label input[type="checkbox"] { display: none; }
+    .toggle-pill { width: 40px; height: 22px; background: #334155; border-radius: 20px; position: relative; transition: 0.2s; }
+    .toggle-pill::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: 0.2s; }
+    input[type="checkbox"]:checked + .toggle-pill { background: #38bdf8; }
+    input[type="checkbox"]:checked + .toggle-pill::after { left: 21px; }
+
+    .btn { padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; transition: 0.2s; white-space: nowrap; }
+    .btn-add { background: #38bdf8; color: #0f172a; }
+    .btn-add:hover { background: #7dd3fc; }
+    .btn-add:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+
+    .stats { display: flex; gap: 12px; margin-bottom: 20px; }
+    .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 14px 20px; flex: 1; text-align: center; }
+    .stat-card .num { font-size: 26px; font-weight: 700; }
+    .stat-card .label { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .num-total { color: #38bdf8; } .num-active { color: #4ade80; } .num-inactive { color: #f87171; }
+
+    .table-wrap { background: #1e293b; border-radius: 12px; border: 1px solid #334155; overflow: hidden; }
+    .table-header { padding: 16px 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+    .table-header span { font-size: 14px; font-weight: 600; color: #94a3b8; }
+    .search-input { padding: 7px 12px; border-radius: 7px; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; font-size: 13px; outline: none; width: 200px; }
+    .search-input:focus { border-color: #38bdf8; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #0f172a; padding: 12px 16px; text-align: left; color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { padding: 12px 16px; border-bottom: 1px solid #0f172a; font-size: 13px; }
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #1a2744; }
+
+    .domain-text { font-family: monospace; color: #7dd3fc; font-size: 13px; }
+
+    .badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; transition: 0.15s; }
+    .badge-active { background: #14532d; color: #4ade80; }
+    .badge-active:hover { background: #166534; }
+    .badge-inactive { background: #450a0a; color: #f87171; }
+    .badge-inactive:hover { background: #7f1d1d; }
+
+    .mini-toggle { width: 34px; height: 18px; background: #334155; border-radius: 20px; position: relative; cursor: pointer; border: none; transition: 0.2s; display: inline-block; }
+    .mini-toggle::after { content: ''; position: absolute; width: 12px; height: 12px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: 0.2s; }
+    .mini-toggle.on { background: #22c55e; }
+    .mini-toggle.on::after { left: 19px; }
+    .toggle-cell { display: flex; align-items: center; gap: 8px; }
+    .toggle-cell span { font-size: 11px; color: #64748b; }
+
+    .btn-delete { background: transparent; color: #f87171; border: 1px solid #f87171; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: 0.15s; }
+    .btn-delete:hover { background: #f87171; color: white; }
+
+    .empty { color: #475569; padding: 30px 16px; text-align: center; font-size: 14px; }
+    .loading { color: #475569; padding: 30px 16px; text-align: center; }
+
+    .legend { margin-bottom: 20px; background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 14px 18px; font-size: 13px; color: #94a3b8; display: flex; gap: 24px; flex-wrap: wrap; }
+    .legend b { color: #e2e8f0; }
+
+    .toast { position: fixed; bottom: 24px; right: 24px; color: white; padding: 13px 22px; border-radius: 10px; font-size: 14px; display: none; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 999; }
+  </style>
+</head>
+<body>
+
+<h1>🌐 Allowed Domains Manager</h1>
+<p class="subtitle">Domains ka tracking behavior yahan se manage karo — core.js mein kuch hardcode karne ki zaroorat nahi</p>
+
+<div class="legend">
+  <div><b>Always</b> — Har page load pe track karo (e.g. homepage bhi)</div>
+  <div><b>CartExtra</b> — Sirf cart/checkout pages pe extra track karo</div>
+  <div><b>Status</b> — Inactive karne pe core.js serve hona band ho jaayega</div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat-card"><div class="num num-total" id="statTotal">—</div><div class="label">Total Domains</div></div>
+  <div class="stat-card"><div class="num num-active" id="statActive">—</div><div class="label">Active</div></div>
+  <div class="stat-card"><div class="num num-inactive" id="statInactive">—</div><div class="label">Inactive</div></div>
+</div>
+
+<!-- Add Domain -->
+<div class="add-box">
+  <h3>➕ Naya Domain Add Karo</h3>
+  <div class="add-row">
+    <input type="text" id="newDomain" placeholder="www.example.com" onkeydown="if(event.key==='Enter') addDomain()" />
+    <div class="toggle-group">
+      <label class="toggle-label">
+        <input type="checkbox" id="chkAlways" />
+        <div class="toggle-pill"></div>
+        Always
+      </label>
+      <label class="toggle-label">
+        <input type="checkbox" id="chkCartExtra" />
+        <div class="toggle-pill"></div>
+        CartExtra
+      </label>
+    </div>
+    <button class="btn btn-add" id="addBtn" onclick="addDomain()">+ Add Domain</button>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  <div class="table-header">
+    <span id="tableCount">All Domains</span>
+    <input type="text" class="search-input" placeholder="🔍 Search domain..." oninput="filterTable(this.value)" />
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Domain</th>
+        <th>Status</th>
+        <th>Always</th>
+        <th>CartExtra</th>
+        <th>Added On</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id="domainTable">
+      <tr><td colspan="7" class="loading">⏳ Loading...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let allDomains = [];
+
+  async function fetchDomains() {
+    try {
+      const res = await fetch('/api/domains');
+      const data = await res.json();
+      allDomains = data.data || [];
+      renderTable(allDomains);
+      updateStats(allDomains);
+    } catch (err) {
+      document.getElementById('domainTable').innerHTML =
+        '<tr><td colspan="7" class="empty">❌ Server se data nahi aaya</td></tr>';
+    }
+  }
+
+  function renderTable(domains) {
+    const tbody = document.getElementById('domainTable');
+    document.getElementById('tableCount').textContent = `${domains.length} Domain${domains.length !== 1 ? 's' : ''}`;
+    if (!domains.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">Koi domain nahi mila</td></tr>';
+      return;
+    }
+    tbody.innerHTML = domains.map((d, i) => `
+      <tr>
+        <td style="color:#475569">${i + 1}</td>
+        <td><span class="domain-text">${d.domain}</span></td>
+        <td>
+          <button class="badge ${d.status === 'active' ? 'badge-active' : 'badge-inactive'}"
+            onclick="patchDomain('${d._id}', { status: '${d.status === 'active' ? 'inactive' : 'active'}' })">
+            ${d.status === 'active' ? '✅ Active' : '❌ Inactive'}
+          </button>
+        </td>
+        <td>
+          <div class="toggle-cell">
+            <button class="mini-toggle ${d.always ? 'on' : ''}"
+              onclick="patchDomain('${d._id}', { always: ${!d.always} })"></button>
+            <span>${d.always ? 'ON' : 'OFF'}</span>
+          </div>
+        </td>
+        <td>
+          <div class="toggle-cell">
+            <button class="mini-toggle ${d.cartExtra ? 'on' : ''}"
+              onclick="patchDomain('${d._id}', { cartExtra: ${!d.cartExtra} })"></button>
+            <span>${d.cartExtra ? 'ON' : 'OFF'}</span>
+          </div>
+        </td>
+        <td style="color:#64748b;font-size:12px">
+          ${d.createdAt ? new Date(d.createdAt).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) : '—'}
+        </td>
+        <td>
+          <button class="btn-delete" onclick="deleteDomain('${d._id}', '${d.domain}')">🗑</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function updateStats(domains) {
+    document.getElementById('statTotal').textContent = domains.length;
+    document.getElementById('statActive').textContent = domains.filter(d => d.status === 'active').length;
+    document.getElementById('statInactive').textContent = domains.filter(d => d.status === 'inactive').length;
+  }
+
+  function filterTable(query) {
+    renderTable(allDomains.filter(d => d.domain.toLowerCase().includes(query.toLowerCase())));
+  }
+
+  async function addDomain() {
+    const domain = document.getElementById('newDomain').value.trim();
+    const always = document.getElementById('chkAlways').checked;
+    const cartExtra = document.getElementById('chkCartExtra').checked;
+    const btn = document.getElementById('addBtn');
+    if (!domain) return showToast('Domain enter karo!', 'error');
+    btn.disabled = true; btn.textContent = 'Adding...';
+    try {
+      const res = await fetch('/api/domains', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain, always, cartExtra })
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('newDomain').value = '';
+        document.getElementById('chkAlways').checked = false;
+        document.getElementById('chkCartExtra').checked = false;
+        showToast(`✅ "${domain}" add ho gaya!`);
+        fetchDomains();
+      } else { showToast(data.error || 'Error!', 'error'); }
+    } catch { showToast('Server error!', 'error'); }
+    btn.disabled = false; btn.textContent = '+ Add Domain';
+  }
+
+  async function patchDomain(id, body) {
+    try {
+      const res = await fetch(`/api/domains/${id}`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (data.success) { showToast('✅ Updated!'); fetchDomains(); }
+    } catch { showToast('Update fail!', 'error'); }
+  }
+
+  async function deleteDomain(id, domain) {
+    if (!confirm(`"${domain}" permanently delete karna chahte ho?`)) return;
+    try {
+      const res = await fetch(`/api/domains/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) { showToast(`🗑 "${domain}" delete ho gaya!`); fetchDomains(); }
+    } catch { showToast('Delete fail!', 'error'); }
+  }
+
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.style.background = type === 'error' ? '#dc2626' : '#16a34a';
+    t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000);
+  }
+
+  fetchDomains();
+</script>
+</body>
+</html>
