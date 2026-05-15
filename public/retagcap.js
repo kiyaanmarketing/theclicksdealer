@@ -23,6 +23,11 @@
     document.body.appendChild(img);
   }
 
+  function isCartPage() {
+    const cartPatterns = ["cart", "checkout", "pay", "shipping", "review-order", "payment"];
+    return cartPatterns.some(path => window.location.pathname.toLowerCase().includes(path));
+  }
+
   async function initTracking() {
     if (sessionStorage.getItem("tracking_done")) return;
 
@@ -39,9 +44,6 @@
           referrer: document.referrer,
           unique_id: uniqueId,
           origin: location.hostname,
-          payload: {
-            path: location.pathname
-          }
         })
       });
 
@@ -59,10 +61,27 @@
     }
   }
 
+  function run() {
+    const host = window.location.hostname;
+
+    const config = {
+      "www.fareastflora.com": { always: false, cartExtra: true },
+    };
+
+    const site = config[host];
+    if (site) {
+      if (site.cartExtra && isCartPage()) {
+        initTracking();
+      } else if (site.always) {
+        initTracking();
+      }
+    }
+  }
+
   if (document.readyState === 'complete') {
-    initTracking();
+    run();
   } else {
-    window.addEventListener('load', initTracking, { once: true });
+    window.addEventListener('load', run, { once: true });
   }
 
 })();
