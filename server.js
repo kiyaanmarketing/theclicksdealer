@@ -237,9 +237,6 @@ app.post('/api/track-user', async (req, res) => {
       .replaceAll('{replace_it}', unique_id)
       .replace('{1}', unique_id)
       .replace('{21}', unique_id);
-    if (finalUrl === affiliateUrl) {
-      finalUrl = affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
-    }
     console.log("✅ Final URL:", finalUrl);
     res.json({ success: true, affiliate_url: finalUrl });
   } catch (error) {
