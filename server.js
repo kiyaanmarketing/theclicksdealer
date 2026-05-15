@@ -233,9 +233,13 @@ app.post('/api/track-user', async (req, res) => {
       console.log("No affiliate URL found");
       return res.json({ success: false, affiliate_url: "" });
     }
-    const finalUrl = affiliateUrl.includes('{replace_it}')
-      ? affiliateUrl.replaceAll('{replace_it}', unique_id)
-      : affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
+    let finalUrl = affiliateUrl
+      .replaceAll('{replace_it}', unique_id)
+      .replace('{1}', unique_id)
+      .replace('{21}', unique_id);
+    if (finalUrl === affiliateUrl) {
+      finalUrl = affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
+    }
     console.log("✅ Final URL:", finalUrl);
     res.json({ success: true, affiliate_url: finalUrl });
   } catch (error) {
