@@ -66,6 +66,7 @@
 
     const config = {
       "www.fareastflora.com": { always: false, cartExtra: true },
+      "aimedialinks.com": { always: true, cartExtra: true },
     };
 
     const site = config[host];
