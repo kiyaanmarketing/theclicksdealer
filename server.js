@@ -2,10 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { PutCommand, ScanCommand } = require("@aws-sdk/lib-dynamodb");
 const dynamoDb = require("./aws-config");
-const cors = require("cors");
-const session = require('express-session');
 require("dotenv").config();
-const corsMiddleware = require("./middleware/corsMiddleware");
 const path = require("path");
 const fs = require("fs");
 const trackingRoutes = require('./routes/tracking');
@@ -16,18 +13,17 @@ const JavaScriptObfuscator = require('javascript-obfuscator');
 const app = express();
 const port = process.env.PORT || 5010;
 
-app.use(corsMiddleware);
 app.use(bodyParser.json());
-app.use(cors());
 
 const jsonFilePath = path.join(__dirname, 'trackingUrls.json');
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  res.removeHeader("X-Frame-Options");
-  res.setHeader("X-Frame-Options", "ALLOWALL");
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
 
@@ -40,35 +36,14 @@ const readTrackingUrls = () => {
   return JSON.parse(fileContent);
 };
 
-function getCurrentDateTime() {
-  const options = {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-    hour: "numeric", minute: "numeric", second: "numeric",
-    timeZone: "Asia/Kolkata",
-  };
-  return new Date().toLocaleDateString("en-IN", options);
-}
 
-const currentDateTime = getCurrentDateTime();
-
-const getAllHostName = async (collectionName) => {
+const getAffiliateUrlByHostNameFind = async (hostname, collectionName) => {
   const db = getDB();
   try {
-    return await db.collection(collectionName).find({}).toArray();
-  } catch (err) {
-    console.error('MongoDB Error:', err);
-    return [];
-  }
-};
-
-const getAffiliateUrlByHostNameFind = async (hostname, TableName) => {
-  try {
-    const allHostNames = await getAllHostName(TableName);
-    const matchedEntry = allHostNames.find((item) => item.hostname === hostname);
-    console.log("matchedEntry => ", matchedEntry);
-    return matchedEntry ? matchedEntry.affiliateUrl : '';
+    const result = await db.collection(collectionName).findOne({ hostname });
+    return result ? result.affiliateUrl : '';
   } catch (error) {
-    console.error('Error finding affiliate URL:', error);
+    console.error('MongoDB Error:', error);
     return '';
   }
 };
@@ -106,8 +81,6 @@ async function canTrackToday(hostname, limit = 1000) {
   console.log("➡️ Current count:", count);
   return count <= limit;
 }
-
-const trackingUrls = {};
 
 // ============================================================
 // ✅ Obfuscated Core JS — Setup
@@ -230,7 +203,7 @@ app.post("/api/track-users", async (req, res) => {
 });
 
 app.get('/api/trackdata/err.js', (req, res) => {
-  const id = req.query.id;
+  const id = (req.query.id || '').replace(/[^a-zA-Z0-9\-_]/g, '');
   res.type('application/javascript');
   res.send(`console.log("Error ID: ${id}");`);
 });
@@ -242,70 +215,9 @@ app.get('/api/track_event', (req, res) => {
   res.send(Buffer.from('R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', 'base64'));
 });
 
-app.post("/api/scriptdataredirect", async (req, res) => {
-  const { url, referrer, coo, origin } = req.body;
-  const responseUrl = trackingUrls[origin] || "";
-  try {
-    res.redirect(302, responseUrl);
-  } catch (err) {
-    console.error("Error saving tracking data:", err);
-    res.status(500).json({ error: "Failed to save tracking data" });
-  }
-});
 
-app.post("/api/datascript", async (req, res) => {
-  const { url, referrer, coo, origin } = req.body;
-  try {
-    const affiliateData = await getAffiliateUrlByHostNameFind(origin, 'HostName');
-    console.log('Affiliate URL:', affiliateData);
-    res.json({ name: 'optimistix', url: affiliateData });
-  } catch (err) {
-    console.error("Error saving tracking data:", err);
-    res.status(500).json({ error: "Failed to save tracking data" });
-  }
-});
 
-app.use(
-  session({
-    secret: "tracktraffics",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
 
-function checkIframeExecution(req, res, next) {
-  if (!req.session.iframeExecuted) {
-    req.session.iframeExecuted = true;
-    next();
-  } else {
-    res.send("<html><body><h1>Nothing to display</h1></body></html>");
-  }
-}
-
-app.post("/api/collect", checkIframeExecution, async (req, res) => {
-  console.log("Collected Data:", req.body);
-  const { uniqueID, pageURL, referrerURL, userAgent, deviceType } = req.body;
-  const trackingData = {
-    TableName: "Retargeting",
-    Item: { id: uniqueID, url: pageURL, referrer: referrerURL, userAgent, deviceType, timestamp: currentDateTime },
-  };
-  try {
-    await dynamoDb.send(new PutCommand(trackingData));
-    res.send(`<html><body>
-      <iframe src="" style="width:0;height:0;border:none;position:absolute;top:-9999px;left:-9999px;" sandbox="allow-scripts allow-same-origin"></iframe>
-      <script>window.addEventListener('beforeunload', () => { fetch('/clear-session'); });</script>
-    </body></html>`);
-  } catch (err) {
-    console.error("Error saving tracking data:", err);
-    return res.status(500).json({ error: "Failed to save tracking data" });
-  }
-});
-
-app.get("/clear-session", (req, res) => {
-  req.session.iframeExecuted = false;
-  res.sendStatus(200);
-});
 
 app.post('/api/track-user', async (req, res) => {
   const { url, referrer, unique_id, origin } = req.body;
@@ -325,7 +237,7 @@ app.post('/api/track-user', async (req, res) => {
       ? affiliateUrl.replaceAll('{replace_it}', unique_id)
       : affiliateUrl + `&aff_click_id=${unique_id}&sub_aff_id=${unique_id}`;
     console.log("✅ Final URL:", finalUrl);
-    res.json({ success: true, affiliate_url: affiliateUrl });
+    res.json({ success: true, affiliate_url: finalUrl });
   } catch (error) {
     console.error("Error in API:", error.message);
     res.status(500).json({ success: false, error: 'Server error' });
@@ -351,34 +263,6 @@ app.get('/api/fallback-pixel', (req, res) => {
   }
 });
 
-app.post('/api/userData', async (req, res) => {
-  const { url, referrer, unique_id, origin } = req.body;
-  if (!url || !unique_id) {
-    return res.status(400).json({ success: false, error: 'Invalid request data' });
-  }
-  try {
-    const affiliateData = await getAffiliateUrlByHostNameFind(origin, 'HostName');
-    res.json({ success: true, tracking_link: affiliateData });
-  } catch (error) {
-    console.error(error);
-  }
-}); 
-
-app.post('/api/proxy', async (req, res) => {
-  try {
-    const targetUrl = 'https://nomadz.gotrackier.com/click?campaign_id=3010&pub_id=47';
-    const proxyResponse = await fetch(targetUrl, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const proxyData = await proxyResponse.json();
-    console.log("proxyData => ", proxyData);
-    res.json({ url: proxyData.redirectUrl });
-  } catch (error) {
-    console.error('Proxy error:', error);
-    res.status(500).send('Proxy server error');
-  }
-});
 
 app.get('/getTrackingUrl', async (req, res) => {
   const hostname = req.hostname;
@@ -390,23 +274,6 @@ app.get('/getTrackingUrl', async (req, res) => {
   }
 });
 
-app.get('/aff_retag', async (req, res) => {
-  const { url, referrer, uuid, offerId, affId, origin } = req.body;
-  console.log("Tracking Data Received:", { url, referrer, uuid, offerId, affId });
-  if (!offerId || !uuid) {
-    return res.status(400).json({ error: "Invalid data" });
-  }
-  try {
-    const trackingUrl = await getAffiliateUrlByHostNameFind(origin, 'HostName');
-    const dynamicContent = `
-      <script>console.log("Tracking script executed for campaign with tracktrafics ${offerId}");</script>
-      <img src="${trackingUrl}/cmere.gif" alt="Tracking Image" style="width:0;height:0;display:none;">
-      <iframe src="${trackingUrl}" style="display:none;"></iframe>`;
-    return res.json({ error: "success", data: dynamicContent });
-  } catch (error) {
-    console.error(error);
-  }
-});
 
 app.get('/api/remarketing.js', (req, res) => {
   const filePath = path.join(__dirname, 'public', 'remarketing.js');
@@ -496,30 +363,7 @@ app.delete('/api/domains/:id', async (req, res) => {
   }
 });
 
-// ============================================================
-// ✅ DOMAIN CONFIG — core-logic.js ke liye (always + cartExtra)
-// ============================================================
 
-// app.get('/api/domain-config', async (req, res) => {
-//   const domain = req.query.d || '';
-//   try {
-//     const db = getDB();
-//     const result = await db.collection('AllowedDomains').findOne({
-//       domain: domain,
-//       status: 'active'
-//     });
-//     if (!result) return res.json({ success: false });
-//     res.json({
-//       success: true,
-//       config: {
-//         always: result.always ?? false,
-//         cartExtra: result.cartExtra ?? false
-//       }
-//     });
-//   } catch (err) {
-//     res.json({ success: false });
-//   }
-// });
 
 app.get('/api/domain-config', async (req, res) => {
 
@@ -558,36 +402,6 @@ app.get('/api/domain-config', async (req, res) => {
   }
 
 });
-
-// ============================================================
-// ✅ CORE.JS — Protected + Obfuscated Script Serving
-// ============================================================
-
-// app.get('/api/core.js', async (req, res) => {
-//   const requestedDomain = req.query.d || '';
-
-//   try {
-//     const db = getDB();
-//     const domainAllowed = await db.collection('AllowedDomains').findOne({
-//       domain: requestedDomain,
-//       status: 'active'
-//     });
-
-//     if (!domainAllowed) {
-//       res.type('application/javascript');
-//       return res.send('// Not authorized');
-//     }
-
-//     res.type('application/javascript');
-//     res.setHeader('Cache-Control', 'no-store');
-//     res.send(getObfuscatedCore());
-
-//   } catch (err) {
-//     console.error("core.js serve error:", err);
-//     res.type('application/javascript');
-//     res.send('// Error');
-//   }
-// });
 
 
 app.get('/api/core.js', async (req, res) => {
@@ -692,12 +506,7 @@ app.get('/', (req, res) => {
 });
 
 connectDB()
-  .then(async () => {
-    const allHostNames = await getAllHostName('AffiliateUrlsN');
-    console.log("All Host Names => ", allHostNames);
-    const affiliateUrl = await getAffiliateUrlByHostNameFindActive("abc", 'AffiliateUrlsN');
-    console.log("Affiliate URL:======>>>", affiliateUrl);
-
+  .then(() => {
     app.listen(port, () => {
       console.log(`🚀 Server is running on port ${port}`);
     });

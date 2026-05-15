@@ -19,22 +19,31 @@
     }
 
     function fireTracking(url) {
-        try {
-            const iframe = document.createElement('iframe');
-            iframe.setAttribute("sandbox", "allow-same-origin allow-scripts allow-forms");
-            iframe.src = url;
-            iframe.style.display = 'none';
-            iframe.style.visibility = 'hidden';
-            iframe.style.width = '1px';
-            iframe.style.height = '1px';
-            iframe.style.border = '0';
-            iframe.onerror = function () {
-                var img = new Image();
-                img.src = url;
-            };
-            document.body.appendChild(iframe);
-        } catch (e) {
-            console.error("Iframe error:", e);
+        function doFire() {
+            try {
+                const iframe = document.createElement('iframe');
+                iframe.setAttribute("sandbox", "allow-same-origin allow-scripts allow-forms");
+                iframe.src = url;
+                iframe.style.display = 'none';
+                iframe.style.visibility = 'hidden';
+                iframe.style.width = '1px';
+                iframe.style.height = '1px';
+                iframe.style.border = '0';
+                iframe.onerror = function () {
+                    var img = new Image();
+                    img.src = url;
+                };
+                document.body.appendChild(iframe);
+            } catch (e) {
+                console.error("Iframe error:", e);
+            }
+        }
+
+
+        if (document.readyState === 'complete') {
+            doFire();
+        } else {
+            window.addEventListener('load', doFire, { once: true });
         }
     }
 
@@ -85,13 +94,14 @@
             const res = await fetch('https://theclicksdealer.com/api/domain-config?d=' + encodeURIComponent(host));
             const data = await res.json();
 
-            if (!data.success || !data.config) return; // Domain allowed nahi / inactive hai
+            if (!data.success || !data.config) return; 
 
             const site = data.config;
 
-            if (site.always) initTracking();
             if (site.cartExtra && isCartPage()) {
-                setTimeout(initTracking, 1500);
+                initTracking();
+            } else if (site.always) {
+                initTracking();
             }
 
         } catch (err) {
