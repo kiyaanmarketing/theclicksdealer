@@ -503,7 +503,11 @@ app.post('/api/track-click', async (req, res) => {
     const affiliateUrl = await getAffiliateUrlByHostNameFindActive(origin, 'AffiliateUrlsN');
     const db = getDB();
 
-    const ip = (req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim();
+    const rawIp = req.headers['cf-connecting-ip'] ||
+      req.headers['x-real-ip'] ||
+      (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+      req.ip || '';
+    const ip = rawIp.replace(/^::ffff:/, '').trim();
     const geo = geoip.lookup(ip);
     const ua = new UAParser(req.headers['user-agent']);
     const device = ua.getDevice().type || 'desktop';
