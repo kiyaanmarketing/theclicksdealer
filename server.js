@@ -15,6 +15,7 @@ const UAParser = require('ua-parser-js');
 const app = express();
 const port = process.env.PORT || 5010;
 
+app.set('trust proxy', true);
 app.use(bodyParser.json());
 
 const jsonFilePath = path.join(__dirname, 'trackingUrls.json');
