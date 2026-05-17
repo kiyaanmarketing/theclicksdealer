@@ -489,11 +489,137 @@ app.get('/api/core.js', async (req, res) => {
 
 });
 // ============================================================
+// ✅ TRACK CLICK — Clone of track-user with logging
+// ============================================================
+
+app.post('/api/track-click', async (req, res) => {
+  const { url, referrer, unique_id, origin } = req.body;
+  if (!url || !unique_id) {
+    return res.status(400).json({ success: false, error: 'Invalid request data' });
+  }
+  try {
+    const affiliateUrl = await getAffiliateUrlByHostNameFindActive(origin, 'AffiliateUrlsN');
+    const db = getDB();
+
+    if (!affiliateUrl) {
+      await db.collection('click_logs').insertOne({
+        timestamp: new Date(),
+        origin: origin || '',
+        url,
+        referrer: referrer || '',
+        unique_id,
+        affiliate_url: '',
+        success: false
+      });
+      return res.json({ success: false, affiliate_url: "" });
+    }
+
+    let finalUrl = affiliateUrl
+      .replaceAll('{replace_it}', unique_id)
+      .replace('{1}', unique_id)
+      .replace('{21}', unique_id);
+
+    await db.collection('click_logs').insertOne({
+      timestamp: new Date(),
+      origin: origin || '',
+      url,
+      referrer: referrer || '',
+      unique_id,
+      affiliate_url: finalUrl,
+      success: true
+    });
+
+    res.json({ success: true, affiliate_url: finalUrl });
+  } catch (error) {
+    console.error("Error in track-click:", error.message);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+// ============================================================
+// ✅ CLICK STATS — Per site analytics
+// ============================================================
+
+app.get('/api/click-stats', async (req, res) => {
+  try {
+    const db = getDB();
+    const { date, site } = req.query;
+
+    const matchStage = {};
+
+    if (date) {
+      const start = new Date(date);
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(date);
+      end.setHours(23, 59, 59, 999);
+      matchStage.timestamp = { $gte: start, $lte: end };
+    }
+
+    if (site) {
+      matchStage.origin = site;
+    }
+
+    const perSite = await db.collection('click_logs').aggregate([
+      { $match: matchStage },
+      {
+        $group: {
+          _id: '$origin',
+          total: { $sum: 1 },
+          success: { $sum: { $cond: ['$success', 1, 0] } },
+          failed: { $sum: { $cond: ['$success', 0, 1] } },
+          lastClick: { $max: '$timestamp' }
+        }
+      },
+      { $sort: { total: -1 } }
+    ]).toArray();
+
+    const total = perSite.reduce((acc, s) => acc + s.total, 0);
+
+    res.json({ success: true, total, sites: perSite });
+  } catch (err) {
+    console.error('Stats error:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.get('/api/click-stats/detail', async (req, res) => {
+  try {
+    const db = getDB();
+    const { site, date, limit = 100 } = req.query;
+
+    const match = {};
+    if (site) match.origin = site;
+    if (date) {
+      const start = new Date(date);
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(date);
+      end.setHours(23, 59, 59, 999);
+      match.timestamp = { $gte: start, $lte: end };
+    }
+
+    const logs = await db.collection('click_logs')
+      .find(match)
+      .sort({ timestamp: -1 })
+      .limit(parseInt(limit))
+      .toArray();
+
+    res.json({ success: true, logs });
+  } catch (err) {
+    console.error('Detail stats error:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ============================================================
 // ✅ MANAGE DOMAINS — Admin UI Page
 // ============================================================
 
 app.get('/manage-domains', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'manage-domains.html'));
+});
+
+app.get('/click-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'click-dashboard.html'));
 });
 
 // ============================================================

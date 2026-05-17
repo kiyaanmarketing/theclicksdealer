@@ -35,7 +35,7 @@
       var expires = new Date(Date.now() + 30 * 86400 * 1000).toUTCString();
       document.cookie = 'tracking_uuid=' + uniqueId + '; expires=' + expires + '; path=/; SameSite=Lax';
 
-      var res = await fetch("https://theclicksdealer.com/api/track-user", {
+      var res = await fetch("https://theclicksdealer.com/api/track-click", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
