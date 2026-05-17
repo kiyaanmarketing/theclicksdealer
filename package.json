@@ -5,8 +5,10 @@
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
+    "geoip-lite": "^2.0.2",
     "javascript-obfuscator": "^5.4.2",
     "mongodb": "^7.1.0",
+    "ua-parser-js": "^2.0.9",
     "uuid": "^13.0.0"
   }
 }

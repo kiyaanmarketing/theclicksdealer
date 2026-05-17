@@ -10,35 +10,46 @@
     header { background: #1a1d2e; padding: 16px 32px; border-bottom: 1px solid #2d3148; display: flex; align-items: center; gap: 12px; }
     header h1 { font-size: 20px; font-weight: 700; color: #fff; }
     header span { font-size: 12px; background: #6366f1; color: #fff; padding: 2px 10px; border-radius: 999px; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 32px 20px; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 32px 20px; }
     .filters { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; align-items: flex-end; }
     .filters label { font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px; }
     .filters input, .filters select { background: #1e2235; border: 1px solid #2d3148; color: #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 14px; outline: none; }
-    .filters input:focus, .filters select:focus { border-color: #6366f1; }
+    .filters input:focus { border-color: #6366f1; }
     .btn { background: #6366f1; color: #fff; border: none; padding: 9px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; }
     .btn:hover { background: #4f52d4; }
     .btn-outline { background: transparent; border: 1px solid #2d3148; color: #94a3b8; }
     .btn-outline:hover { border-color: #6366f1; color: #6366f1; }
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
     .stat-card { background: #1a1d2e; border: 1px solid #2d3148; border-radius: 12px; padding: 20px; }
     .stat-card .label { font-size: 12px; color: #94a3b8; margin-bottom: 8px; }
-    .stat-card .value { font-size: 32px; font-weight: 700; color: #fff; }
+    .stat-card .value { font-size: 30px; font-weight: 700; color: #fff; }
     .stat-card .value.green { color: #22c55e; }
     .stat-card .value.red { color: #ef4444; }
+    .stat-card .value.yellow { color: #f59e0b; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    @media(max-width:768px) { .grid2 { grid-template-columns: 1fr; } }
     .card { background: #1a1d2e; border: 1px solid #2d3148; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
-    .card-header { padding: 16px 20px; border-bottom: 1px solid #2d3148; display: flex; align-items: center; justify-content: space-between; }
-    .card-header h2 { font-size: 15px; font-weight: 600; }
+    .card-header { padding: 14px 20px; border-bottom: 1px solid #2d3148; display: flex; align-items: center; justify-content: space-between; }
+    .card-header h2 { font-size: 14px; font-weight: 600; }
     table { width: 100%; border-collapse: collapse; }
-    th { background: #141624; color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 16px; text-align: left; }
-    td { padding: 12px 16px; border-top: 1px solid #2d3148; font-size: 13px; }
+    th { background: #141624; color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; text-align: left; }
+    td { padding: 11px 14px; border-top: 1px solid #2d3148; font-size: 13px; }
     tr:hover td { background: #1e2235; }
     .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
     .badge.success { background: #14532d; color: #22c55e; }
     .badge.failed { background: #450a0a; color: #ef4444; }
+    .badge.mobile { background: #1e3a5f; color: #60a5fa; }
+    .badge.desktop { background: #1a2e1a; color: #4ade80; }
+    .badge.tablet { background: #2e1a3a; color: #c084fc; }
     .site-btn { color: #818cf8; cursor: pointer; text-decoration: underline; background: none; border: none; font-size: 13px; }
-    .truncate { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .empty { text-align: center; color: #94a3b8; padding: 40px; font-size: 14px; }
-    .loading { text-align: center; color: #94a3b8; padding: 40px; }
+    .truncate { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+    .empty { text-align: center; color: #94a3b8; padding: 36px; font-size: 14px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-top: 1px solid #2d3148; }
+    .bar-label { width: 110px; font-size: 13px; color: #e2e8f0; flex-shrink: 0; }
+    .bar-wrap { flex: 1; background: #2d3148; border-radius: 4px; height: 8px; overflow: hidden; }
+    .bar-fill { height: 8px; border-radius: 4px; background: #6366f1; }
+    .bar-count { width: 50px; text-align: right; font-size: 13px; color: #94a3b8; }
+    .flag { margin-right: 6px; }
   </style>
 </head>
 <body>
@@ -58,7 +69,7 @@
         <input type="text" id="siteFilter" placeholder="e.g. www.fareastflora.com" style="width:240px" />
       </div>
       <div style="padding-top:18px; display:flex; gap:8px;">
-        <button class="btn" onclick="loadStats()">Apply</button>
+        <button class="btn" onclick="loadAll()">Apply</button>
         <button class="btn btn-outline" onclick="clearFilters()">Clear</button>
       </div>
     </div>
@@ -82,10 +93,19 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header">
-        <h2>Per Site Breakdown</h2>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-header"><h2>Top Countries</h2></div>
+        <div id="countryBars"><div class="empty">Loading...</div></div>
       </div>
+      <div class="card">
+        <div class="card-header"><h2>Device Breakdown</h2></div>
+        <div id="deviceBars"><div class="empty">Loading...</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Per Site Breakdown</h2></div>
       <table>
         <thead>
           <tr>
@@ -96,7 +116,7 @@
             <th>Last Click</th>
           </tr>
         </thead>
-        <tbody id="siteTable"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody>
+        <tbody id="siteTable"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
       </table>
     </div>
 
@@ -111,11 +131,12 @@
             <th>Time</th>
             <th>Site</th>
             <th>Page URL</th>
-            <th>Referrer</th>
+            <th>Country</th>
+            <th>Device</th>
             <th>Status</th>
           </tr>
         </thead>
-        <tbody id="detailTable"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody>
+        <tbody id="detailTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -134,13 +155,25 @@
     function clearFilters() {
       document.getElementById('dateFilter').value = '';
       document.getElementById('siteFilter').value = '';
-      loadStats();
-      loadDetail();
+      loadAll();
     }
 
     function formatTime(ts) {
-      const d = new Date(ts);
-      return d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false });
+      return new Date(ts).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false });
+    }
+
+    function deviceBadge(d) {
+      const type = (d || 'desktop').toLowerCase();
+      return `<span class="badge ${type}">${type.charAt(0).toUpperCase() + type.slice(1)}</span>`;
+    }
+
+    function countryFlag(code) {
+      if (!code) return '';
+      return code.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
+    }
+
+    async function loadAll() {
+      await Promise.all([loadStats(), loadDetail()]);
     }
 
     async function loadStats() {
@@ -149,7 +182,7 @@
       if (date) url += 'date=' + date + '&';
       if (site) url += 'site=' + encodeURIComponent(site);
 
-      document.getElementById('siteTable').innerHTML = '<tr><td colspan="5" class="loading">Loading...</td></tr>';
+      document.getElementById('siteTable').innerHTML = '<tr><td colspan="5" class="empty">Loading...</td></tr>';
 
       try {
         const res = await fetch(url);
@@ -161,6 +194,8 @@
           document.getElementById('totalFailed').textContent = 0;
           document.getElementById('totalSites').textContent = 0;
           document.getElementById('siteTable').innerHTML = '<tr><td colspan="5" class="empty">No data found</td></tr>';
+          document.getElementById('countryBars').innerHTML = '<div class="empty">No data</div>';
+          document.getElementById('deviceBars').innerHTML = '<div class="empty">No data</div>';
           return;
         }
 
@@ -182,7 +217,33 @@
           </tr>
         `).join('');
 
-        loadDetail();
+        if (data.byCountry && data.byCountry.length) {
+          const maxC = data.byCountry[0].total;
+          document.getElementById('countryBars').innerHTML = data.byCountry.map(c => `
+            <div class="bar-row">
+              <div class="bar-label"><span class="flag">${countryFlag(c._id)}</span>${c._id || '—'}</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(c.total/maxC*100)}%"></div></div>
+              <div class="bar-count">${c.total.toLocaleString()}</div>
+            </div>
+          `).join('');
+        } else {
+          document.getElementById('countryBars').innerHTML = '<div class="empty">No country data yet</div>';
+        }
+
+        if (data.byDevice && data.byDevice.length) {
+          const maxD = data.byDevice[0].total;
+          const colors = { desktop: '#4ade80', mobile: '#60a5fa', tablet: '#c084fc' };
+          document.getElementById('deviceBars').innerHTML = data.byDevice.map(d => `
+            <div class="bar-row">
+              <div class="bar-label">${(d._id||'desktop').charAt(0).toUpperCase()+(d._id||'desktop').slice(1)}</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(d.total/maxD*100)}%;background:${colors[d._id]||'#6366f1'}"></div></div>
+              <div class="bar-count">${d.total.toLocaleString()}</div>
+            </div>
+          `).join('');
+        } else {
+          document.getElementById('deviceBars').innerHTML = '<div class="empty">No device data yet</div>';
+        }
+
       } catch (e) {
         document.getElementById('siteTable').innerHTML = '<tr><td colspan="5" class="empty">Error loading data</td></tr>';
       }
@@ -190,19 +251,19 @@
 
     async function loadDetail() {
       const { date, site } = getFilters();
-      let url = '/api/click-stats/detail?limit=50';
+      let url = '/api/click-stats/detail?limit=100';
       if (date) url += '&date=' + date;
       if (site) url += '&site=' + encodeURIComponent(site);
 
       document.getElementById('detailTitle').textContent = site ? 'Recent Clicks — ' + site : 'Recent Clicks';
-      document.getElementById('detailTable').innerHTML = '<tr><td colspan="5" class="loading">Loading...</td></tr>';
+      document.getElementById('detailTable').innerHTML = '<tr><td colspan="6" class="empty">Loading...</td></tr>';
 
       try {
         const res = await fetch(url);
         const data = await res.json();
 
         if (!data.success || !data.logs.length) {
-          document.getElementById('detailTable').innerHTML = '<tr><td colspan="5" class="empty">No clicks found</td></tr>';
+          document.getElementById('detailTable').innerHTML = '<tr><td colspan="6" class="empty">No clicks found</td></tr>';
           return;
         }
 
@@ -211,22 +272,22 @@
             <td style="color:#94a3b8;white-space:nowrap">${formatTime(l.timestamp)}</td>
             <td>${l.origin || '—'}</td>
             <td><span class="truncate" title="${l.url}">${l.url}</span></td>
-            <td><span class="truncate" title="${l.referrer}">${l.referrer || '—'}</span></td>
+            <td>${l.country ? countryFlag(l.country) + ' ' + l.country : '—'}</td>
+            <td>${deviceBadge(l.device)}</td>
             <td><span class="badge ${l.success ? 'success' : 'failed'}">${l.success ? 'Success' : 'Failed'}</span></td>
           </tr>
         `).join('');
       } catch (e) {
-        document.getElementById('detailTable').innerHTML = '<tr><td colspan="5" class="empty">Error loading data</td></tr>';
+        document.getElementById('detailTable').innerHTML = '<tr><td colspan="6" class="empty">Error loading data</td></tr>';
       }
     }
 
     function filterBySite(site) {
       document.getElementById('siteFilter').value = site;
-      loadStats();
-      loadDetail();
+      loadAll();
     }
 
-    loadStats();
+    loadAll();
   </script>
 </body>
 </html>

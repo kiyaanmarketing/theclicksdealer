@@ -9,6 +9,8 @@ const trackingRoutes = require('./routes/tracking');
 const { connectDB, getDB } = require('./mongo-config');
 const { ObjectId } = require('mongodb');
 const JavaScriptObfuscator = require('javascript-obfuscator');
+const geoip = require('geoip-lite');
+const UAParser = require('ua-parser-js');
 
 const app = express();
 const port = process.env.PORT || 5010;
@@ -501,16 +503,31 @@ app.post('/api/track-click', async (req, res) => {
     const affiliateUrl = await getAffiliateUrlByHostNameFindActive(origin, 'AffiliateUrlsN');
     const db = getDB();
 
+    const ip = (req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim();
+    const geo = geoip.lookup(ip);
+    const ua = new UAParser(req.headers['user-agent']);
+    const device = ua.getDevice().type || 'desktop';
+    const browser = ua.getBrowser().name || '';
+    const os = ua.getOS().name || '';
+    const country = geo ? geo.country : '';
+    const city = geo ? geo.city : '';
+
+    const logBase = {
+      timestamp: new Date(),
+      origin: origin || '',
+      url,
+      referrer: referrer || '',
+      unique_id,
+      ip,
+      country,
+      city,
+      device,
+      browser,
+      os
+    };
+
     if (!affiliateUrl) {
-      await db.collection('click_logs').insertOne({
-        timestamp: new Date(),
-        origin: origin || '',
-        url,
-        referrer: referrer || '',
-        unique_id,
-        affiliate_url: '',
-        success: false
-      });
+      await db.collection('click_logs').insertOne({ ...logBase, affiliate_url: '', success: false });
       return res.json({ success: false, affiliate_url: "" });
     }
 
@@ -519,15 +536,7 @@ app.post('/api/track-click', async (req, res) => {
       .replace('{1}', unique_id)
       .replace('{21}', unique_id);
 
-    await db.collection('click_logs').insertOne({
-      timestamp: new Date(),
-      origin: origin || '',
-      url,
-      referrer: referrer || '',
-      unique_id,
-      affiliate_url: finalUrl,
-      success: true
-    });
+    await db.collection('click_logs').insertOne({ ...logBase, affiliate_url: finalUrl, success: true });
 
     res.json({ success: true, affiliate_url: finalUrl });
   } catch (error) {
@@ -573,9 +582,22 @@ app.get('/api/click-stats', async (req, res) => {
       { $sort: { total: -1 } }
     ]).toArray();
 
+    const byCountry = await db.collection('click_logs').aggregate([
+      { $match: { ...matchStage, country: { $ne: '' } } },
+      { $group: { _id: '$country', total: { $sum: 1 } } },
+      { $sort: { total: -1 } },
+      { $limit: 10 }
+    ]).toArray();
+
+    const byDevice = await db.collection('click_logs').aggregate([
+      { $match: matchStage },
+      { $group: { _id: '$device', total: { $sum: 1 } } },
+      { $sort: { total: -1 } }
+    ]).toArray();
+
     const total = perSite.reduce((acc, s) => acc + s.total, 0);
 
-    res.json({ success: true, total, sites: perSite });
+    res.json({ success: true, total, sites: perSite, byCountry, byDevice });
   } catch (err) {
     console.error('Stats error:', err);
     res.status(500).json({ success: false, error: err.message });
